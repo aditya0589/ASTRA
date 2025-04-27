@@ -9,7 +9,7 @@ genai.configure(api_key = st.secrets["GOOGLE_API_KEY"])
 model = genai.GenerativeModel("gemini-1.5-flash")
 chat = model.start_chat(history=[])
 
-def generate_gemini_content(transcript_text, prompt):
+def get_gemini_response(transcript_text, prompt):
     model = genai.GenerativeModel("gemini-1.5-flash")
     chat = model.start_chat()
 
