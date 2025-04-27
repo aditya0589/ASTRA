@@ -10,7 +10,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 load_dotenv()
 
 
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+genai.configure(api_key = st.secrets["GOOGLE_API_KEY"])
 
 # Prompt for the Gemini model
 prompt = """
