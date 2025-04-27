@@ -48,9 +48,6 @@ def show_chatbot():
         st.session_state['chat_history'].append(("You", input_text))
 
         st.subheader("The Response:")
-        complete_response = ""
-        for chunk in response:
-            st.write(chunk.text)
-            complete_response += chunk.text
+        st.write(response)
 
-        st.session_state['chat_history'].append(("Bot", complete_response))
+        st.session_state['chat_history'].append(("Bot", response))
