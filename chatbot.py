@@ -9,18 +9,27 @@ genai.configure(api_key = st.secrets["GOOGLE_API_KEY"])
 model = genai.GenerativeModel("gemini-1.5-flash")
 chat = model.start_chat(history=[])
 
-def get_gemini_response(question):
-    response = chat.send_message(
-    [
-        {
-            "role": "user",
-            "parts": [{"text": question}]
-        }
-    ],
-    stream=True
-)
+def generate_gemini_content(transcript_text, prompt):
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    chat = model.start_chat()
 
-    return response
+    final_prompt = prompt + transcript_text
+
+    response = chat.send_message(
+        [
+            {
+                "role": "user",
+                "parts": [{"text": final_prompt}]
+            }
+        ],
+        stream=False
+    )
+
+    # ✅ Extract the final text properly
+    final_text = response.candidates[0].content.parts[0].text
+
+    return final_text
+
 
 def show_chatbot():
     st.title("ASTRA - Your AI Chatbot")
