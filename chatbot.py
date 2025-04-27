@@ -13,7 +13,7 @@ def get_gemini_response(question):
     model = genai.GenerativeModel("gemini-1.5-flash")
     chat = model.start_chat()
 
-    response = chat.send_message(question, stream=False)
+    response = chat.send_message(question, stream=True)
 
     final_text = response.candidates[0].content.parts[0].text
 
