@@ -3,6 +3,7 @@ ASTRA is a simple, lightweight AI chatbot built with Streamlit and Google's Gemi
 It allows users to interact with the Gemini API through a clean, fast web interface, supporting dynamic conversations and chat history management.
 
 **Services Provided**
+
 AI Chatbot
 
 YouTube Video Transcript Summarizer
