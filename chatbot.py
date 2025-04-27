@@ -10,7 +10,16 @@ model = genai.GenerativeModel("gemini-1.5-flash")
 chat = model.start_chat(history=[])
 
 def get_gemini_response(question):
-    response = chat.send_message(question, stream=True)
+    response = chat.send_message(
+    [
+        {
+            "role": "user",
+            "parts": [{"text": question}]
+        }
+    ],
+    stream=True
+)
+
     return response
 
 def show_chatbot():
