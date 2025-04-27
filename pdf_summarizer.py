@@ -15,7 +15,7 @@ from langchain.prompts import PromptTemplate
 load_dotenv()
 
 # Configure Gemini
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+genai.configure(api_key = st.secrets["GOOGLE_API_KEY"])
 
 # --- Utility Functions ---
 
