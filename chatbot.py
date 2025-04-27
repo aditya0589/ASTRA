@@ -13,19 +13,12 @@ def get_gemini_response(question):
     model = genai.GenerativeModel("gemini-1.5-flash")
     chat = model.start_chat()
 
-    response = chat.send_message(
-        [
-            {
-                "role": "user",
-                "parts": [{"text": question}]
-            }
-        ],
-        stream=False
-    )
+    response = chat.send_message(question, stream=False)
 
     final_text = response.candidates[0].content.parts[0].text
 
     return final_text
+
 
 def show_chatbot():
     st.title("ASTRA - Your AI Chatbot")
