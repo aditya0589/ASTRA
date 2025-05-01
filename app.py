@@ -7,8 +7,6 @@ import streamlit as st
 import chatbot
 import pdf_summarizer
 import yt_summarizer
-import invoice_summarizer
-import nutrition_assistant
 import picture_summarizer  # NEW IMPORT
 
 # Initialize app
