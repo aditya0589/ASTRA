@@ -22,3 +22,5 @@ Clean and responsive Streamlit UI.
 Easy API integration with secure key management.
 
 Quick setup and deployment.
+
+view the deployed app here : https://astra-ai-app.streamlit.app/
