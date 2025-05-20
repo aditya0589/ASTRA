@@ -1,30 +1,30 @@
 import streamlit as st
+import os
 import google.generativeai as genai
 
-# Configure Gemini (only once)
-genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+# Configure Gemini with your API key (set this in your environment variables)
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Load Gemini model
+# Load Gemini model and start a chat session
 model = genai.GenerativeModel("gemini-1.5-flash")
 chat = model.start_chat(history=[])
 
+# Function to get response
 def get_gemini_response(question):
-    """Send a message to Gemini and get a response."""
-    model = genai.GenerativeModel("gemini-1.5-flash")
-    chat = model.start_chat()
+    lowered = question.strip().lower()
 
-    response = chat.send_message(
-        question,    # just the text
-        stream=False # no streaming, simple output
-    )
+    # Custom hardcoded responses
+    if lowered in ["who created you", "who made you", "who is your creator", "who developed you"]:
+        return "I was developed by Aditya."
 
-    return response.text  # directly get the text
+    # Gemini streamed response
+    return chat.send_message(question, stream=True)
 
+# Streamlit app
 def show_chatbot():
-    """Display the chatbot interface in Streamlit."""
     st.title("ASTRA - Your AI Chatbot")
 
-    # Initialize chat history
+    # Initialize chat history in session state
     if "chat_history" not in st.session_state:
         st.session_state['chat_history'] = []
 
@@ -36,20 +36,29 @@ def show_chatbot():
 
     # Input from user
     input_text = st.text_input("Ask me anything...", key='input')
-
-    # Submit button
     submit = st.button("Ask")
 
     if submit and input_text:
-        # Get response
         response = get_gemini_response(input_text)
 
-        # Save user message
+        # Add user input to chat history
         st.session_state['chat_history'].append(("You", input_text))
 
-        # Display bot response
         st.subheader("The Response:")
-        st.write(response)
+        complete_response = ""
 
-        # Save bot message
-        st.session_state['chat_history'].append(("Bot", response))
+        # Handle custom vs Gemini streamed response
+        if isinstance(response, str):
+            st.write(response)
+            complete_response = response
+        else:
+            for chunk in response:
+                st.write(chunk.text)
+                complete_response += chunk.text
+
+        # Add bot response to chat history
+        st.session_state['chat_history'].append(("Bot", complete_response))
+
+# Run the chatbot app
+if __name__ == "__main__":
+    show_chatbot()
